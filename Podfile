@@ -1,13 +1,15 @@
 use_frameworks!
-platform :ios, '16.2'
+platform :ios, '16'
   # Pods for myProject
-pod 'Firebase/Storage'
-pod 'Firebase/Core'
-pod 'Firebase/Database'
-pod 'Firebase/RemoteConfig'
-pod 'FirebaseUI'
-pod 'GoogleSignInSwiftSupport'
-pod 'GoogleSignIn'
 
 target 'myProject' do
+
+
+ 	pod 'Firebase/Core'
+	pod 'Firebase/Auth'
+	pod 'Firebase/Firestore'
+	pod 'Firebase/Analytics'
+	pod 'GoogleSignInSwiftSupport'
+	pod 'GoogleSignIn'
+
 end

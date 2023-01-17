@@ -7,8 +7,6 @@
 
 import UIKit
 import FirebaseCore
-import Foundation
-import CoreServices
 import GoogleSignIn
 
 @main
@@ -19,14 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
-        // Register for GetURL events.
-        let appleEventManager = NSAppleEventManager.shared()
-        appleEventManager.setEventHandler(
-            self,
-            andSelector: "handleGetURLEvent:replyEvent:",
-            forEventClass: AEEventClass(kInternetEventClass),
-            andEventID: AEEventID(kAEGetURL)
-        )
+        
         return true
     }
     
@@ -40,16 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        var handled: Bool
         
-        handled = GIDSignIn.sharedInstance.handle(url)
-        if handled {
-            return true
-        }
         
-        return false
+        return GIDSignIn.sharedInstance.handle(url)
     }
     
     
 }
-

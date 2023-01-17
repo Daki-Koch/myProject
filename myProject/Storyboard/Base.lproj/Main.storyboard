@@ -11,7 +11,7 @@
         <!--Card Game Score -->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="AuthenticationViewController" customModule="myProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthenticationVC" id="BYZ-38-t0r" customClass="AuthenticationViewController" customModule="myProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -71,12 +71,41 @@
                     </navigationItem>
                     <connections>
                         <outlet property="emailTextField" destination="wz5-Oj-IGV" id="KQz-bR-xJy"/>
+                        <outlet property="googleSignInButton" destination="edR-gq-Rtn" id="0tS-ai-MZV"/>
                         <outlet property="passwordTextField" destination="cYp-XN-DQZ" id="Oo9-RA-3xN"/>
+                        <segue destination="bId-zt-jpr" kind="show" identifier="SignInSeugue" id="OpG-GA-oLy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="758" y="4"/>
+        </scene>
+        <!--Game Mode Selection-->
+        <scene sceneID="s88-CP-SSO">
+            <objects>
+                <viewController storyboardIdentifier="GameModeVC" title="Game Mode Selection" id="bId-zt-jpr" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Fgh-u3-K5b">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d2Y-F5-zsk">
+                                <rect key="frame" x="153.66666666666666" y="361" width="86" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="5 Player"/>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="8pg-k0-Ltg"/>
+                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                        <constraints>
+                            <constraint firstItem="d2Y-F5-zsk" firstAttribute="top" secondItem="8pg-k0-Ltg" secondAttribute="top" constant="206" id="LqH-BL-yOf"/>
+                            <constraint firstItem="d2Y-F5-zsk" firstAttribute="centerX" secondItem="Fgh-u3-K5b" secondAttribute="centerX" id="SCx-hl-0x5"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Game Mode" id="RSa-h3-cjd"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rf8-gq-byN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1912" y="4"/>
         </scene>
         <!--Sign Up-->
         <scene sceneID="IiM-DZ-U2F">
