@@ -46,9 +46,6 @@
                                 <rect key="frame" x="76" y="605" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <connections>
-                                    <action selector="googleSignIn:" destination="BYZ-38-t0r" eventType="valueChanged" id="mC7-pR-sba"/>
-                                </connections>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -71,9 +68,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="emailTextField" destination="wz5-Oj-IGV" id="KQz-bR-xJy"/>
-                        <outlet property="googleSignInButton" destination="edR-gq-Rtn" id="0tS-ai-MZV"/>
+                        <outlet property="googleSignInButton" destination="edR-gq-Rtn" id="wbB-r3-auQ"/>
                         <outlet property="passwordTextField" destination="cYp-XN-DQZ" id="Oo9-RA-3xN"/>
-                        <segue destination="bId-zt-jpr" kind="show" identifier="SignInSeugue" id="OpG-GA-oLy"/>
+                        <segue destination="bId-zt-jpr" kind="show" identifier="SignInSegue" id="OpG-GA-oLy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -83,7 +80,7 @@
         <!--Game Mode Selection-->
         <scene sceneID="s88-CP-SSO">
             <objects>
-                <viewController storyboardIdentifier="GameModeVC" title="Game Mode Selection" id="bId-zt-jpr" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GameModeVC" title="Game Mode Selection" id="bId-zt-jpr" customClass="GameModeViewController" customModule="myProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fgh-u3-K5b">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -101,7 +98,13 @@
                             <constraint firstItem="d2Y-F5-zsk" firstAttribute="centerX" secondItem="Fgh-u3-K5b" secondAttribute="centerX" id="SCx-hl-0x5"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Game Mode" id="RSa-h3-cjd"/>
+                    <navigationItem key="navigationItem" title="Game Mode" id="RSa-h3-cjd">
+                        <barButtonItem key="leftBarButtonItem" image="power" catalog="system" id="Wbb-07-VZ2">
+                            <connections>
+                                <action selector="signOut:" destination="bId-zt-jpr" id="9qs-KB-d8f"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rf8-gq-byN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -195,6 +198,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="power" catalog="system" width="127" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

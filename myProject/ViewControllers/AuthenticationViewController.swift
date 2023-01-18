@@ -14,14 +14,13 @@ import GoogleSignIn
 class AuthenticationViewController: UIViewController {
     
     @IBOutlet weak var googleSignInButton: GIDSignInButton!
-    var googleSignIn = GIDSignIn.sharedInstance
-    
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        print(googleSignInButton)
+        googleSignInButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(googleSignIn)))
     }
     
     @IBAction func signInTapped(_ sender: Any) {
@@ -40,33 +39,13 @@ class AuthenticationViewController: UIViewController {
         }
     }
     
-    @IBAction func googleSignIn(_ sender: UIButton!) {
-        print("something")
-        self.googleAuthLogin()
+    @objc func googleSignIn() {
+ 
+        Authentication().googleAuthLogin()
         
     }
     
-    func googleAuthLogin() {
-        
-        print("pressed")
-        let googleConfig = GIDConfiguration(clientID: "CLIENT_ID")
-        
-        self.googleSignIn.signIn(withPresenting: self) { result, error in
-            
-            guard error == nil else { return }
-            
-            guard let result = result else {
-                return
-            }
-            let userId = result.user.userID ?? ""
-            let userIdToken = result.user.idToken
-            let userFirstName = result.user.profile?.givenName ?? ""
-            let userLastName = result.user.profile?.familyName ?? ""
-            let userEmail = result.user.profile?.email ?? ""
-            let googleProfilePicURL = result.user.profile?.imageURL(withDimension: 150)?.absoluteString ?? ""
-            
-        }
-    }
+
 }
 
 

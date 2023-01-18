@@ -17,16 +17,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
             if error != nil || user == nil {
+
                 // Show the app's signed-out state.
                 let homePage = mainStoryboard.instantiateViewController(withIdentifier: "AuthenticationVC") as! AuthenticationViewController
-                
-                //self.window?.rootViewController?.present(AuthenticationViewController(), animated: false)
-                
+                self.window?.rootViewController?.show(homePage, sender: nil)
             } else {
                 let homePage = mainStoryboard.instantiateViewController(withIdentifier: "GameModeVC") as! GameModeViewController
-                //self.window?.rootViewController?.present(GameModeViewController(), animated: false)
-                // Show the app's signed-in state.
+                self.window?.rootViewController?.show(homePage, sender: nil)
             }
+            
         }
         guard let _ = (scene as? UIWindowScene) else { return }
     }
