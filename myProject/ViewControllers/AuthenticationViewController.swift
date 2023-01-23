@@ -19,32 +19,41 @@ class AuthenticationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(googleSignInButton)
         googleSignInButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(googleSignIn)))
     }
     
     @IBAction func signInTapped(_ sender: Any) {
         if validateSignInFields(emailTextField.text, passwordTextField.text){
-            signIn(email: emailTextField.text!, password: passwordTextField.text!)
-        }
-    }
-    
-    func signIn(email: String, password: String){
-        let auth = Auth.auth()
-        
-        auth.signIn(withEmail: email, password: password) { authDataResult, error in
-            if let error = error {
-                self.showFailure(message: error.localizedDescription, title: "Error")
+            Authentication().authLogin(email: emailTextField.text!, password: passwordTextField.text!) { result, error in
+                if let error = error{
+                    self.showFailure(message: error.localizedDescription, title: "Error")
+                    return
+                }
+                
+                if result{
+                    
+                    self.performSegue(withIdentifier: "SignInSegue", sender: nil)
+                    self.passwordTextField.text = ""
+                }
             }
         }
     }
     
+    
     @objc func googleSignIn() {
  
-        Authentication().googleAuthLogin()
+        Authentication().googleAuthLogin(viewController: self) { result, error in
+            if let error = error{
+                self.showFailure(message: error.localizedDescription, title: "Error")
+                return
+            }
+            if result{
+                self.performSegue(withIdentifier: "SignInSegue", sender: nil)
+            }
+        }
         
     }
-    
+
 
 }
 

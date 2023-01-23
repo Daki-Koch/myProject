@@ -9,10 +9,12 @@ import Foundation
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
+import GoogleSignIn
 
 
 class SignUpViewController: UIViewController{
     
+    @IBOutlet weak var googleSignInButton: GIDSignInButton!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
@@ -20,6 +22,7 @@ class SignUpViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        googleSignInButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(googleSignUp)))
         
     }
     
@@ -27,29 +30,34 @@ class SignUpViewController: UIViewController{
         // checks if sign up Fields are valid and filled.
         if validateSignUpFields(emailTextField.text, usernameTextField.text, passwordTextField.text, confirmPasswordTextField.text){
             //if valid and correctly filled, creates new user in firebase.
-            signUp(email: emailTextField.text!, username: usernameTextField.text!, password: passwordTextField.text!)
+            Authentication().signUp(email: emailTextField.text!, username: usernameTextField.text!, password: passwordTextField.text!) { result, error in
+                if let error = error{
+                    self.showFailure(message: error.localizedDescription, title: "Error")
+                    return
+                }
+                
+                if result {
+                    self.performSegue(withIdentifier: "SignUpSegue", sender: nil)
+                }
+            }
         }
     }
     
-    func signUp(email: String, username: String, password: String){
+    
+    @objc func googleSignUp() {
         
-        let auth = Auth.auth()
-        auth.createUser(withEmail: email, password: password) { result, error in
-            if let error = error {
+        Authentication().googleAuthLogin(viewController: self) { result, error in
+            if let error = error{
                 self.showFailure(message: error.localizedDescription, title: "Error")
                 return
             }
             
-            let db = Firestore.firestore()
-            let userID: String = auth.currentUser!.uid
-            db.collection("users").document(userID).setData(["email": email, "username": username]) { (err) in
-                if let error = err{
-                    self.showFailure(message: error.localizedDescription, title: "Error")
-                }
+            if result {
+                self.performSegue(withIdentifier: "SignUpSegue", sender: nil)
             }
-            
         }
+        
     }
-
+    
     
 }

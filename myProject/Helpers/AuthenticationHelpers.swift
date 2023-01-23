@@ -13,16 +13,12 @@ extension UIViewController{
     
     func validateSignUpFields(_ email: String?, _ username: String?, _ password: String?, _ confirmPassword: String?) -> Bool {
 
-        if let cleanedEmail = email?.trimmingCharacters(in: .whitespacesAndNewlines), let cleanedUsername = username?.trimmingCharacters(in: .whitespacesAndNewlines), let password = password, let confirmPassword = confirmPassword {
+
+        if let email = email, let cleanedUsername = username?.trimmingCharacters(in: .whitespacesAndNewlines), let password = password, let confirmPassword = confirmPassword {
             
             
-            if cleanedEmail == "" || cleanedUsername == "" || password == "" || confirmPassword == ""{
+            if email == "" || cleanedUsername == "" || password == "" || confirmPassword == ""{
                 showFailure(message: "Please fill in all fields", title: "Missing Data")
-                return false
-            }
-            
-            if UIViewController.isValidEmail(cleanedEmail){
-                showFailure(message: "Please enter valid email", title: "Invalid email")
                 return false
             }
             
@@ -59,9 +55,5 @@ extension UIViewController{
         return passwordTest.evaluate(with: password)
     }
     
-    static func isValidEmail(_ email: String) -> Bool {
-        
-        let emailPred = NSPredicate(format:"SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
-        return emailPred.evaluate(with: email)
-    }
+
 }

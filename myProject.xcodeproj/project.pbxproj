@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		48BA000400D292026BB55A95 /* Pods_myProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03D85FBA92DA78D524171658 /* Pods_myProject.framework */; };
 		6308700F296C7F990005B923 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6308700E296C7F990005B923 /* GoogleService-Info.plist */; };
+		630C7645297EB2F400AD69BD /* ScoreViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630C7644297EB2F400AD69BD /* ScoreViewController+Extensions.swift */; };
 		6333F24529776C030010FC92 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6333F24429776C030010FC92 /* Authentication.swift */; };
 		633848B829773B1900E3B665 /* GameModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633848B729773B1900E3B665 /* GameModeViewController.swift */; };
+		6349D583297EA49D00C34A2D /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6349D582297EA49D00C34A2D /* Player.swift */; };
 		63AC6082296C529C007AD889 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AC6081296C529C007AD889 /* AppDelegate.swift */; };
 		63AC6084296C529C007AD889 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AC6083296C529C007AD889 /* SceneDelegate.swift */; };
 		63AC6086296C529C007AD889 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AC6085296C529C007AD889 /* AuthenticationViewController.swift */; };
@@ -24,6 +26,9 @@
 		63AC60B8296C5C4D007AD889 /* AuthenticationHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AC60B7296C5C4D007AD889 /* AuthenticationHelpers.swift */; };
 		63AC60E9296C642B007AD889 /* ShowAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AC60E8296C642B007AD889 /* ShowAlert.swift */; };
 		63AC60EB296C6932007AD889 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AC60EA296C6932007AD889 /* SignUpViewController.swift */; };
+		63CA5D6A297AB1EE00033905 /* PlayerInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CA5D69297AB1EE00033905 /* PlayerInputViewController.swift */; };
+		63CA5D6C297ADC8000033905 /* ScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CA5D6B297ADC8000033905 /* ScoreViewController.swift */; };
+		63CA5D6E297AF4AF00033905 /* TarotScoreComputing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CA5D6D297AF4AF00033905 /* TarotScoreComputing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,8 +54,10 @@
 		6308AC302976E0880084B920 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6308AC322976E0B40084B920 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		6308AC342976E0CF0084B920 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		630C7644297EB2F400AD69BD /* ScoreViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScoreViewController+Extensions.swift"; sourceTree = "<group>"; };
 		6333F24429776C030010FC92 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		633848B729773B1900E3B665 /* GameModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModeViewController.swift; sourceTree = "<group>"; };
+		6349D582297EA49D00C34A2D /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		63AC607E296C529C007AD889 /* myProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63AC6081296C529C007AD889 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63AC6083296C529C007AD889 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +75,9 @@
 		63AC60B7296C5C4D007AD889 /* AuthenticationHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationHelpers.swift; sourceTree = "<group>"; };
 		63AC60E8296C642B007AD889 /* ShowAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowAlert.swift; sourceTree = "<group>"; };
 		63AC60EA296C6932007AD889 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		63CA5D69297AB1EE00033905 /* PlayerInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerInputViewController.swift; sourceTree = "<group>"; };
+		63CA5D6B297ADC8000033905 /* ScoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreViewController.swift; sourceTree = "<group>"; };
+		63CA5D6D297AF4AF00033905 /* TarotScoreComputing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TarotScoreComputing.swift; sourceTree = "<group>"; };
 		9176AB584ACA79FDEC63EEFA /* Pods-myProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myProject.debug.xcconfig"; path = "Target Support Files/Pods-myProject/Pods-myProject.debug.xcconfig"; sourceTree = "<group>"; };
 		F2F62892A1D1F1BF166B3DFF /* Pods-myProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myProject.release.xcconfig"; path = "Target Support Files/Pods-myProject/Pods-myProject.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +126,15 @@
 			path = GoogleAuthAPI;
 			sourceTree = "<group>";
 		};
+		6349D584297EA4AB00C34A2D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				63CA5D6D297AF4AF00033905 /* TarotScoreComputing.swift */,
+				6349D582297EA49D00C34A2D /* Player.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		63AC6075296C529B007AD889 = {
 			isa = PBXGroup;
 			children = (
@@ -141,6 +160,7 @@
 		63AC6080296C529C007AD889 /* myProject */ = {
 			isa = PBXGroup;
 			children = (
+				6349D584297EA4AB00C34A2D /* Model */,
 				6333F24329776BD90010FC92 /* GoogleAuthAPI */,
 				63AC60B6296C5C1A007AD889 /* Helpers */,
 				63AC60B5296C5725007AD889 /* Storyboard */,
@@ -177,6 +197,8 @@
 				633848B729773B1900E3B665 /* GameModeViewController.swift */,
 				63AC6085296C529C007AD889 /* AuthenticationViewController.swift */,
 				63AC60EA296C6932007AD889 /* SignUpViewController.swift */,
+				63CA5D69297AB1EE00033905 /* PlayerInputViewController.swift */,
+				63CA5D6B297ADC8000033905 /* ScoreViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -195,6 +217,7 @@
 			children = (
 				63AC60E8296C642B007AD889 /* ShowAlert.swift */,
 				63AC60B7296C5C4D007AD889 /* AuthenticationHelpers.swift */,
+				630C7644297EB2F400AD69BD /* ScoreViewController+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -410,11 +433,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63CA5D6A297AB1EE00033905 /* PlayerInputViewController.swift in Sources */,
+				63CA5D6C297ADC8000033905 /* ScoreViewController.swift in Sources */,
 				63AC6086296C529C007AD889 /* AuthenticationViewController.swift in Sources */,
 				63AC60EB296C6932007AD889 /* SignUpViewController.swift in Sources */,
+				63CA5D6E297AF4AF00033905 /* TarotScoreComputing.swift in Sources */,
+				6349D583297EA49D00C34A2D /* Player.swift in Sources */,
 				63AC60E9296C642B007AD889 /* ShowAlert.swift in Sources */,
 				63AC6082296C529C007AD889 /* AppDelegate.swift in Sources */,
 				6333F24529776C030010FC92 /* Authentication.swift in Sources */,
+				630C7645297EB2F400AD69BD /* ScoreViewController+Extensions.swift in Sources */,
 				63AC60B8296C5C4D007AD889 /* AuthenticationHelpers.swift in Sources */,
 				633848B829773B1900E3B665 /* GameModeViewController.swift in Sources */,
 				63AC6084296C529C007AD889 /* SceneDelegate.swift in Sources */,

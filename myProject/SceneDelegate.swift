@@ -17,10 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
             if error != nil || user == nil {
-
-                // Show the app's signed-out state.
-                let homePage = mainStoryboard.instantiateViewController(withIdentifier: "AuthenticationVC") as! AuthenticationViewController
-                self.window?.rootViewController?.show(homePage, sender: nil)
+                AuthenticationViewController.load()
             } else {
                 let homePage = mainStoryboard.instantiateViewController(withIdentifier: "GameModeVC") as! GameModeViewController
                 self.window?.rootViewController?.show(homePage, sender: nil)
@@ -29,15 +26,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         guard let _ = (scene as? UIWindowScene) else { return }
     }
-    
-    func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
-    }
-    
-    
-    
 }
 
