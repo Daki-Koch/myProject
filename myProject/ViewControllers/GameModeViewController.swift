@@ -13,6 +13,7 @@ import FirebaseAuth
 
 class GameModeViewController: UIViewController {
     
+    var dataController: DataController!
     @IBOutlet weak var signOutButton: UIBarButtonItem!
     
     @IBOutlet weak var threePlayerButton: UIButton!
@@ -50,8 +51,11 @@ class GameModeViewController: UIViewController {
         if let vc = segue.destination as? PlayerInputViewController{
             if let tag = sender.self as? Int{
                 vc.numberOfPlayers = tag
-                
+                vc.dataController = dataController
             }
+        }
+        if let vc = segue.destination as? MapViewController{
+            vc.dataController = dataController
         }
         
     }

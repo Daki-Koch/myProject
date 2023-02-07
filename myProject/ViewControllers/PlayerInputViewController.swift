@@ -13,6 +13,7 @@ import FirebaseAuth
 class PlayerInputViewController: UIViewController {
     
     var numberOfPlayers: Int!
+    var dataController: DataController!
     
     @IBOutlet weak var firstPlayerTextField: UITextField!
     @IBOutlet weak var secondPlayerTextField: UITextField!
@@ -90,9 +91,12 @@ class PlayerInputViewController: UIViewController {
             vc.players = []
             for username in usernames {
                 
-                vc.players.append(Player(name: username))
+                let player = Player(context: dataController.viewContext)
+                player.name = username
+                vc.players.append(player)
+                
             }
-            
+            vc.dataController = dataController
         }
         
     }

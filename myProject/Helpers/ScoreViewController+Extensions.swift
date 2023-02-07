@@ -7,32 +7,35 @@
 
 import Foundation
 import UIKit
+import CoreLocation
+import CoreData
+import MapKit
 
-extension ScoreViewController: UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource {
+extension ScoreViewController: UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate{
     
-    func setupPullDownButton(players: [Player]){
+    func setupPullDownButtons(players: [Player]){
+        
         var playerUiActions: [UIAction] = []
         var calledPlayerUiActions: [UIAction] = []
-        
-        let chelemPullDownButtonClosure = { (action: UIAction) in
-            print("Chelem is \(action.title)")
-        }
-        let playerPullDownButtonClosure = { (action: UIAction) in
-            self.betTaker = action.title
-            print("Bet taker is: \(action.title)")
-        }
-        let calledPlayerPullDownButtonClosure = { (action: UIAction) in
-            print("Called player is \(action.title)")
+        let pullDownButtonClosure = { (action: UIAction) in
+            
         }
         
-        let chelemUiActions: [UIAction] = [UIAction(title: "No", handler: chelemPullDownButtonClosure), UIAction(title: "Not announced", handler: chelemPullDownButtonClosure), UIAction(title: "Announced", handler: chelemPullDownButtonClosure)]
+        
+        //for future possible implementation for more accurate gameplay.
+        /*let poigneeUiActions: [UIAction] = [UIAction(title: "None", handler: pullDownButtonClosure), UIAction(title: "Simple (10)", handler: pullDownButtonClosure), UIAction(title: "Double (13)", handler: pullDownButtonClosure), UIAction(title: "Triple (15)", handler: pullDownButtonClosure)]*/
+        
+        let petitAuBoutUiActions: [UIAction] = [UIAction(title: "No", handler: pullDownButtonClosure), UIAction(title: "Yes", handler: pullDownButtonClosure), UIAction(title: "Defenders", handler: pullDownButtonClosure)]
+        
+        let chelemUiActions: [UIAction] = [UIAction(title: "No", handler: pullDownButtonClosure), UIAction(title: "Not announced", handler: pullDownButtonClosure), UIAction(title: "Announcement failed", handler: pullDownButtonClosure) ,UIAction(title: "Announced", handler: pullDownButtonClosure)]
         
         for player in players {
-            playerUiActions.append(UIAction(title: player.name, handler: playerPullDownButtonClosure))
-            calledPlayerUiActions.append(UIAction(title: player.name, handler: calledPlayerPullDownButtonClosure))
+            playerUiActions.append(UIAction(title: player.name ?? "", handler: pullDownButtonClosure))
+            calledPlayerUiActions.append(UIAction(title: player.name ?? "", handler: pullDownButtonClosure))
         }
         
-        
+        //poigneeButton.menu = UIMenu(children: poigneeUiActions)
+        petitAuBoutButton.menu = UIMenu(children: petitAuBoutUiActions)
         chelemButton.menu = UIMenu(children: chelemUiActions)
         calledPlayerButton.menu = UIMenu(children: calledPlayerUiActions)
         betTakerButton.menu = UIMenu(children: playerUiActions)
@@ -62,5 +65,74 @@ extension ScoreViewController: UIPickerViewDataSource, UIPickerViewDelegate, UIT
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return TarotScoreComputing().bet[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        self.bet = TarotScoreComputing().bet[row]
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            currentLatitude = location.coordinate.latitude
+            currentLongitude = location.coordinate.longitude
+            locationManager.stopUpdatingLocation()
+        }
+    }
+    
+    func fetchPins() -> [Pin]{
+        let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
+        if let result = try? dataController.viewContext.fetch(fetchRequest) {
+            return result
+        } else {
+            return []
+        }
+        
+    }
+    
+    func fetchPinData(coordinates: CLLocationCoordinate2D) -> Pin? {
+        let existingPins = fetchPins()
+        var pin: Pin?
+        if existingPins.count > 0 {
+            for existingPin in existingPins {
+                if existingPin.latitude == coordinates.latitude && existingPin.longitude == coordinates.longitude{
+                    pin = existingPin
+                }
+            }
+        }
+        return pin
+    }
+    
+    func addPinLocation(coordinates: CLLocationCoordinate2D) {
+        let existingPins = fetchPins()
+        
+        if existingPins.count > 0 {
+            for existingPin in existingPins {
+                if existingPin.latitude == coordinates.latitude && existingPin.longitude == coordinates.longitude{
+                    
+                    return
+                } else {
+                    addNewPin(coordinates: coordinates)
+                    return
+                }
+            }
+            
+        } else {
+            addNewPin(coordinates: coordinates)
+        }
+        
+    }
+    
+    func addNewPin(coordinates: CLLocationCoordinate2D){
+        
+        let pin = Pin(context: dataController.viewContext)
+        pin.latitude = coordinates.latitude
+        pin.longitude = coordinates.longitude
+        pin.creationDate = Date()
+        try? dataController.viewContext.save()
+        
+        let pinAnnotation = MKPointAnnotation()
+        pinAnnotation.coordinate = coordinates
+
     }
 }

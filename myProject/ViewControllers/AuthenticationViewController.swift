@@ -12,6 +12,7 @@ import GoogleSignIn
 
 
 class AuthenticationViewController: UIViewController {
+    var dataController: DataController!
     
     @IBOutlet weak var googleSignInButton: GIDSignInButton!
     @IBOutlet weak var emailTextField: UITextField!
@@ -54,6 +55,12 @@ class AuthenticationViewController: UIViewController {
         
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? GameModeViewController{
+            vc.dataController = dataController
+        }
+
+    }
 
 }
 
