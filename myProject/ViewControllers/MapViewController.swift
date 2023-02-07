@@ -15,13 +15,20 @@ class MapViewController: UIViewController {
     @IBOutlet var mapView: MKMapView!
     
     var dataController: DataController!
-    
+    let locationManager = CLLocationManager()
+    var currentLatitude: Double = 0.0
+    var currentLongitude: Double = 0.0
     var pins: [Pin] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        setMapView()
         loadMapPins()
+
 
     }
     
@@ -30,6 +37,9 @@ class MapViewController: UIViewController {
         var annotations = [MKPointAnnotation]()
         let result = fetchPins()
         for pin in result{
+            if pin.games?.count == 0{
+                return
+            }
             let annotation = MKPointAnnotation()
             annotation.coordinate.longitude = pin.longitude
             annotation.coordinate.latitude = pin.latitude
@@ -62,27 +72,7 @@ class MapViewController: UIViewController {
         return pin
     }
     
-    
-    
 
 }
 
-extension MapViewController: MKMapViewDelegate {
-    
-    func mapView(_ mapView: MKMapView, didSelect annotation: MKAnnotation) {
-        performSegue(withIdentifier: "pinHistorySegue", sender: annotation)
-        mapView.deselectAnnotation(annotation, animated: false)
-    }
-    
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? HistoryViewController{
-            if let annotation = sender.self as? MKAnnotation{
-                
-                vc.pin = fetchPinData(coordinates: annotation.coordinate)
-                vc.dataController = dataController
-            }
-        }
-    }
-    
-}

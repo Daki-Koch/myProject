@@ -528,6 +528,7 @@
                         <outlet property="tableView" destination="npk-dI-q3v" id="S1q-0s-CEW"/>
                         <outlet property="undoButton" destination="d0X-Gk-FFX" id="QFI-1v-mOl"/>
                         <outlet property="updateScoreButton" destination="wPZ-X8-waC" id="w0O-am-plf"/>
+                        <segue destination="fqo-Wo-B6O" kind="show" identifier="savedGameSegue" id="20R-eR-4O1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qsh-Yo-J9A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -663,8 +664,15 @@
                             <constraint firstItem="82x-xg-ED6" firstAttribute="centerX" secondItem="LLh-Cg-LGx" secondAttribute="centerX" id="xl9-1U-BZS"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Game details" id="fv1-uS-Eki"/>
+                    <navigationItem key="navigationItem" title="Game details" id="fv1-uS-Eki">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="trash" id="oba-sv-HKs">
+                            <connections>
+                                <action selector="deleteTapped:" destination="wIQ-9C-41Z" id="yJr-QW-Plz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="deleteBarButton" destination="oba-sv-HKs" id="EcJ-Er-lcN"/>
                         <outlet property="fifthPlayerLabel" destination="go6-dz-jEa" id="jti-yv-lKt"/>
                         <outlet property="firstPlayerLabel" destination="LLh-Cg-LGx" id="enF-C4-fUJ"/>
                         <outlet property="fourthPlayerLabel" destination="0Jb-Td-zGS" id="lZi-K2-zf7"/>
@@ -674,7 +682,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ahw-Mc-s00" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3792" y="1175"/>
+            <point key="canvasLocation" x="3891" y="1175"/>
         </scene>
         <!--Sign Up-->
         <scene sceneID="IiM-DZ-U2F">
@@ -775,6 +783,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="20R-eR-4O1"/>
         <segue reference="OpG-GA-oLy"/>
     </inferredMetricsTieBreakers>
     <resources>

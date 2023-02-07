@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class DetailsViewController: UIViewController{
     
@@ -15,10 +16,13 @@ class DetailsViewController: UIViewController{
     @IBOutlet weak var thirdPlayerLabel: UILabel!
     @IBOutlet weak var fourthPlayerLabel: UILabel!
     @IBOutlet weak var fifthPlayerLabel: UILabel!
+    @IBOutlet weak var deleteBarButton: UIBarButtonItem!
     
     
+    var gameFetchedResultController: NSFetchedResultsController<Game>!
     var dataController: DataController!
     var players: [Player] = []
+    var indexPath: IndexPath!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,5 +45,45 @@ class DetailsViewController: UIViewController{
             fifthPlayerLabel.isHidden = false
             fifthPlayerLabel.text = "\(sortedPlayers[4].name!): \(sortedPlayers[4].score)"
         }
+    }
+    
+    @IBAction func deleteTapped(_ sender: Any) {
+        
+        showAlert(message: "Are you sure you want to delete this item?", title: "") { action in
+            if action.title == "Delete"{
+                self.deleteGame()
+            }
+            if action.title == "Cancel"{
+                DispatchQueue.main.async {
+                    return
+                }
+            }
+        }
+
+        
+    }
+    
+    func deleteGame(){
+        let gameToDelete = gameFetchedResultController.object(at: indexPath)
+        dataController.viewContext.delete(gameToDelete)
+        
+        guard let navigationController = self.navigationController else{
+            return
+        }
+        
+        if gameFetchedResultController.sections?.count == 0{
+            dataController.viewContext.delete(gameToDelete.location!)
+        }
+        
+        try? dataController.viewContext.save()
+        
+        let viewControllers = navigationController.viewControllers
+        for viewController in viewControllers {
+            if viewController is GameModeViewController {
+                self.navigationController?.popToViewController(viewController, animated: true)
+                break
+            }
+        }
+        
     }
 }

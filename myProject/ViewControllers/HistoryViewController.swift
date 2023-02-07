@@ -18,7 +18,6 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchSavedData()
-        print("Sections: \(gameFetchedResultController.sections?[0].numberOfObjects)")
         tableView.reloadData()
     }
     
@@ -76,6 +75,8 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
             if let indexPath = tableView.indexPathForSelectedRow {
                 vc.players = gameFetchedResultController.object(at: indexPath).players?.allObjects as? [Player] ?? []
                 vc.dataController = dataController
+                vc.gameFetchedResultController = gameFetchedResultController
+                vc.indexPath = indexPath
             }
             
         }

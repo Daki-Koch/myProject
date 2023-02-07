@@ -149,12 +149,24 @@ class ScoreViewController: UIViewController{
         }
         do{
             try dataController.viewContext.save()
-            showFailure(message: "Game was successfully saved!", title: "Success")
+            undoButton.isEnabled = false
+            
         } catch {
             showFailure(message: error.localizedDescription, title: "Error")
         }
         
+        guard let navigationController = self.navigationController else{
+            return
+        }
+        let viewControllers = navigationController.viewControllers
+        for viewController in viewControllers {
+            if viewController is GameModeViewController {
+                self.navigationController?.popToViewController(viewController, animated: true)
+                break
+            }
+        }
     }
+    
 }
- 
+
 
