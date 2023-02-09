@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import CoreData
+import CoreLocation
 
 class HistoryViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
@@ -18,14 +19,47 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchSavedData()
-        tableView.reloadData()
+        checkSavedData {
+            self.fetchSavedData()
+            self.tableView.reloadData()
+        }
+        
     }
     
-    let dateFormatter: DateFormatter = {
-        let df = DateFormatter()
-        df.dateStyle = .medium
-        return df
-    }()
+    func checkSavedData(completion: @escaping () -> Void?){
+        FirebaseAPI().getGameData(coordinates: CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)) { dates in
+            self.fetchSavedData()
+            if let objects = self.gameFetchedResultController.sections?[0].objects as? [Game] {
+                if objects.count < dates.count{
+                    print("different count: obj \(objects.count)  date \(dates.count)")
+                    for date in dates {
+                        self.addGame(date: date)
+                    }
+                    
+                } else {
+                    print("obj count is \(objects.count)")
+                    for date in dates {
+                        self.compareDates(date: date, objects: objects)
+                    }
+                }
+            }
+        }
+    }
+    
+    func compareDates(date: String, objects: [Game]){
+        
+        for object in objects{
+            print("Fetched date is \(object.date! == date)")
+        }
+        
+    }
+    
+    func addGame(date: String){
+        let game = Game(context: self.dataController.viewContext)
+        game.date = date
+        game.location = self.pin
+        try? dataController.viewContext.save()
+    }
     
     func fetchSavedData(){
         
@@ -59,7 +93,7 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
         
         
         if let creationDate = gameFetchedResultController.object(at: indexPath).date {
-            cell.textLabel?.text = dateFormatter.string(from: creationDate)
+            cell.textLabel?.text = creationDate
         }
         cell.detailTextLabel?.text = "Number of players: \(gameFetchedResultController.object(at: indexPath).players!.count)"
         return cell

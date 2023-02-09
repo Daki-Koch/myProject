@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import FirebaseFirestore
 import FirebaseAuth
 import GoogleSignIn
 
@@ -23,6 +22,7 @@ class SignUpViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         googleSignInButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(googleSignUp)))
+        
         
     }
     

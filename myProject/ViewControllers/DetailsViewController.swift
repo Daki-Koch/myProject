@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import CoreData
+import CoreLocation
 
 class DetailsViewController: UIViewController{
     
@@ -44,6 +45,25 @@ class DetailsViewController: UIViewController{
         if players.count > 4 {
             fifthPlayerLabel.isHidden = false
             fifthPlayerLabel.text = "\(sortedPlayers[4].name!): \(sortedPlayers[4].score)"
+        }
+    }
+    
+    func getPlayerInfos(){
+        
+        if let latitude = gameFetchedResultController.object(at: self.indexPath).location?.latitude, let longitude = gameFetchedResultController.object(at: self.indexPath).location?.longitude{
+            
+            FirebaseAPI().getPlayersData(coordinates: CLLocationCoordinate2D(latitude: latitude, longitude: longitude)) { playerNames, playerScores in
+                for (index, player) in playerNames.enumerated() {
+                    let savedPlayer = Player(context: self.dataController.viewContext)
+                    savedPlayer.name = player
+                    savedPlayer.score = playerScores[index]
+                    self.players[index].name = player
+                    self.players[index].score = playerScores[index]
+                    savedPlayer.game = self.gameFetchedResultController.object(at: self.indexPath)
+                }
+                print(playerNames)
+                try? self.dataController.viewContext.save()
+            }
         }
     }
     

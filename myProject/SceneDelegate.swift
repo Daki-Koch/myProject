@@ -7,6 +7,7 @@
 
 import UIKit
 import GoogleSignIn
+import FirebaseAuth
 
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -23,16 +24,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = window?.rootViewController as! UINavigationController
         
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let auth = Auth.auth()
+        
         
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
-            if error != nil || user == nil {
-                
-                let authenticationViewController = navigationController.topViewController as! AuthenticationViewController
-                authenticationViewController.dataController = self.dataController
-            } else {
+            
+            /*guard error == nil else {
+                print(error)
+                return
+            }*/
+            if user != nil || auth.currentUser != nil{
                 let homePage = mainStoryboard.instantiateViewController(withIdentifier: "GameModeVC") as! GameModeViewController
                 homePage.dataController = self.dataController
                 self.window?.rootViewController?.show(homePage, sender: nil)
+            } else {
+                let authenticationViewController = navigationController.topViewController as! AuthenticationViewController
+                authenticationViewController.dataController = self.dataController
+                
             }
             
         }

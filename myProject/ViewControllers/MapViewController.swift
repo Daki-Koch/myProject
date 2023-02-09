@@ -22,30 +22,73 @@ class MapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         setMapView()
-        loadMapPins()
-
-
+        checkForNewPins()
+        
+        
+        
     }
     
     
     func loadMapPins() {
         var annotations = [MKPointAnnotation]()
+        
         let result = fetchPins()
         for pin in result{
-            if pin.games?.count == 0{
-                return
-            }
             let annotation = MKPointAnnotation()
             annotation.coordinate.longitude = pin.longitude
             annotation.coordinate.latitude = pin.latitude
             annotations.append(annotation)
         }
+        
+        
         mapView.addAnnotations(annotations)
+    }
+    
+    func checkForNewPins() {
+        
+        FirebaseAPI().getPinsData { downloadedPinLocations in
+            for location in downloadedPinLocations {
+                self.addPinLocation(coordinates: location)
+            }
+            self.loadMapPins()
+        }
+        
+    }
+    
+    func addPinLocation(coordinates: CLLocationCoordinate2D) {
+        let existingPins = fetchPins()
+        if existingPins.count > 0 {
+            for existingPin in existingPins {
+                if existingPin.latitude == coordinates.latitude && existingPin.longitude == coordinates.longitude{
+                    return
+                }
+            }
+            addNewPin(coordinates: coordinates)
+            return
+            
+            
+        } else {
+            addNewPin(coordinates: coordinates)
+        }
+        
+    }
+    
+    
+    func addNewPin(coordinates: CLLocationCoordinate2D){
+        
+        let pin = Pin(context: dataController.viewContext)
+        pin.latitude = coordinates.latitude
+        pin.longitude = coordinates.longitude
+        try? dataController.viewContext.save()
+        
+        let pinAnnotation = MKPointAnnotation()
+        pinAnnotation.coordinate = coordinates
+        
     }
     
     func fetchPins() -> [Pin]{
@@ -57,22 +100,19 @@ class MapViewController: UIViewController {
         }
         
     }
-    
-    
-    func fetchPinData(coordinates: CLLocationCoordinate2D) -> Pin? {
-        let existingPins = fetchPins()
-        var pin: Pin?
-        if existingPins.count > 0 {
-            for existingPin in existingPins {
-                if existingPin.latitude == coordinates.latitude && existingPin.longitude == coordinates.longitude{
-                    pin = existingPin
-                }
-            }
-        }
-        return pin
+    func setMapView() {
+        
+        let locationManager = CLLocationManager()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+        locationManager.delegate = self
+        
+        mapView.showsUserLocation = true
     }
     
-
+    
+    
 }
 
 

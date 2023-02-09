@@ -13,6 +13,8 @@ import MapKit
 
 extension ScoreViewController: UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate, UITableViewDataSource, CLLocationManagerDelegate{
     
+
+    
     func setupPullDownButtons(players: [Player]){
         
         var playerUiActions: [UIAction] = []
@@ -128,7 +130,6 @@ extension ScoreViewController: UIPickerViewDataSource, UIPickerViewDelegate, UIT
         let pin = Pin(context: dataController.viewContext)
         pin.latitude = coordinates.latitude
         pin.longitude = coordinates.longitude
-        pin.creationDate = Date()
         try? dataController.viewContext.save()
         
         let pinAnnotation = MKPointAnnotation()

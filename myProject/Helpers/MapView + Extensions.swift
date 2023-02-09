@@ -20,29 +20,6 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate{
     }
     
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination as? HistoryViewController{
-            if let annotation = sender.self as? MKAnnotation{
-                
-                vc.pin = fetchPinData(coordinates: annotation.coordinate)
-                vc.dataController = dataController
-            }
-        }
-    }
-    
-    func setMapView() {
-        
-        let locationManager = CLLocationManager()
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
-        locationManager.delegate = self
-        
-        if CLLocationManager.locationServicesEnabled() {
-            mapView.showsUserLocation = true
-        }
-    }
-    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
@@ -53,4 +30,30 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate{
         
         
     }
+    
+
+    
+    func fetchPinData(coordinates: CLLocationCoordinate2D) -> Pin? {
+        let existingPins = fetchPins()
+        var pin: Pin?
+        if existingPins.count > 0 {
+            for existingPin in existingPins {
+                if existingPin.latitude == coordinates.latitude && existingPin.longitude == coordinates.longitude{
+                    pin = existingPin
+                }
+            }
+        }
+        return pin
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? HistoryViewController{
+            if let annotation = sender.self as? MKAnnotation{
+                
+                vc.pin = fetchPinData(coordinates: annotation.coordinate)
+                vc.dataController = dataController
+            }
+        }
+    }
+
 }

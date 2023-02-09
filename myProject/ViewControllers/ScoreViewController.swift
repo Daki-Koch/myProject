@@ -9,8 +9,11 @@ import Foundation
 import UIKit
 import CoreData
 import CoreLocation
+import FirebaseDatabase
+
 
 class ScoreViewController: UIViewController{
+    
     
     var dataController: DataController!
     var players: [Player] = []
@@ -132,13 +135,16 @@ class ScoreViewController: UIViewController{
     
     @IBAction func saveGameTapped(_ sender: Any) {
         
+        let date = dateFormatter.string(from: Date())
+        
+        FirebaseAPI().storeGameData(latitude: currentLatitude, longitude: currentLongitude, date: date, players: players)
         let managedContext = dataController.viewContext
         // Create "Pin" entity
         addPinLocation(coordinates: CLLocationCoordinate2D(latitude: currentLatitude, longitude: currentLongitude))
         
         // Create "Game" entity
         let game = Game(context: managedContext)
-        game.date = Date()
+        game.date = date
         game.location = fetchPinData(coordinates: CLLocationCoordinate2D(latitude: currentLatitude, longitude: currentLongitude))
         
         for player in players {
@@ -167,6 +173,12 @@ class ScoreViewController: UIViewController{
         }
     }
     
+    let dateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateStyle = .medium
+        df.timeStyle = .medium
+        return df
+    }()
 }
 
 

@@ -8,7 +8,7 @@
 import Foundation
 import GoogleSignIn
 import FirebaseAuth
-import FirebaseFirestore
+
 
 class Authentication {
     
@@ -67,7 +67,6 @@ class Authentication {
     }
     
     func signUp(email: String, username: String, password: String, completion: @escaping (Bool, Error?) -> Void?){
-        
         let auth = Auth.auth()
         auth.createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
@@ -76,21 +75,7 @@ class Authentication {
                 }
                 return
             }
-            
-            
-            let db = Firestore.firestore()
-            let userID: String = auth.currentUser!.uid
-            db.collection("users").document(userID).setData(["email": email, "username": username]) { (error) in
-                if let error = error {
-                    DispatchQueue.main.async {
-                        completion(false, error)
-                    }
-                    return
-                }
-                
-            }
-        
-            
+
             if let authResult = authResult{
             
                 if let userEmail = authResult.user.email{
@@ -104,7 +89,7 @@ class Authentication {
                         }
                         
                         if let _ = result?.user{
-                            print(auth.currentUser)
+                            
                             let changeRequest = auth.currentUser?.createProfileChangeRequest()
                             changeRequest?.displayName = username
                             changeRequest?.commitChanges { error in
