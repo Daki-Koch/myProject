@@ -99,6 +99,10 @@ class DetailsViewController: UIViewController{
     }
     
     func deleteGame(){
+        
+        if let latitude = gameFetchedResultController.object(at: self.indexPath).location?.latitude, let longitude = gameFetchedResultController.object(at: self.indexPath).location?.longitude, let date = gameFetchedResultController.object(at: indexPath).date{
+            FirebaseAPI().deleteGameData(date: date, coordinates: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
+        }
         let gameToDelete = gameFetchedResultController.object(at: indexPath)
         dataController.viewContext.delete(gameToDelete)
         

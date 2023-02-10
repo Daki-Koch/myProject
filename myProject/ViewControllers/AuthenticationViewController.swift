@@ -16,6 +16,7 @@ class AuthenticationViewController: UIViewController {
     
     @IBOutlet weak var googleSignInButton: GIDSignInButton!
     @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var passwordTextField: UITextField!
     
     override func viewDidLoad() {
@@ -24,6 +25,7 @@ class AuthenticationViewController: UIViewController {
     }
     
     @IBAction func signInTapped(_ sender: Any) {
+        activityIndicator.startAnimating()
         if validateSignInFields(emailTextField.text, passwordTextField.text){
             Authentication().authLogin(email: emailTextField.text!, password: passwordTextField.text!) { result, error in
                 if let error = error{
@@ -35,6 +37,7 @@ class AuthenticationViewController: UIViewController {
                     
                     self.performSegue(withIdentifier: "SignInSegue", sender: nil)
                     self.passwordTextField.text = ""
+                    self.activityIndicator.stopAnimating()
                 }
             }
         }
@@ -42,7 +45,7 @@ class AuthenticationViewController: UIViewController {
     
     
     @objc func googleSignIn() {
- 
+        activityIndicator.startAnimating()
         Authentication().googleAuthLogin(viewController: self) { result, error in
             if let error = error{
                 self.showFailure(message: error.localizedDescription, title: "Error")
@@ -50,6 +53,7 @@ class AuthenticationViewController: UIViewController {
             }
             if result{
                 self.performSegue(withIdentifier: "SignInSegue", sender: nil)
+                self.activityIndicator.stopAnimating()
             }
         }
         

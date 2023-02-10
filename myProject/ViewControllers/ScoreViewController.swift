@@ -145,6 +145,7 @@ class ScoreViewController: UIViewController{
         // Create "Game" entity
         let game = Game(context: managedContext)
         game.date = date
+        game.nbrPlayer = Int16(players.count)
         game.location = fetchPinData(coordinates: CLLocationCoordinate2D(latitude: currentLatitude, longitude: currentLongitude))
         
         for player in players {

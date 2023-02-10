@@ -39,29 +39,16 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
             self.fetchSavedData()
             if let objects = self.gameFetchedResultController.sections?[0].objects as? [Game] {
                 if objects.count < dates.count{
-                    print("different count: obj \(objects.count)  date \(dates.count)")
                     for (index, date) in dates.enumerated() {
                         self.addGame(date: date, nbrPlayer: nbrPlayer[index])
                     }
                     
-                } else {
-                    print("obj count is \(objects.count)")
-                    for date in dates {
-                        self.compareDates(date: date, objects: objects)
-                    }
                 }
             }
         }
         }
     }
     
-    func compareDates(date: String, objects: [Game]){
-        
-        for object in objects{
-            print("Fetched date is \(object.date! == date)")
-        }
-        
-    }
     
     func addGame(date: String, nbrPlayer: Int16){
         let game = Game(context: self.dataController.viewContext)

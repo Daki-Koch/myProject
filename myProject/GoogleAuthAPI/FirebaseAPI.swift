@@ -33,7 +33,7 @@ class FirebaseAPI{
         let locations = Endpoint.location.databaseRef
         locations.setValue(["latitude" : latitude, "longitude" : longitude])
         let games = locations.child("game")
-        games.setValue(["date" : date])
+        games.setValue(["date" : date, "nbrPlayer" : players.count])
         
         for (index, player) in players.enumerated() {
             games.child("player \(index)").setValue(["username" : player.name!, "score" : player.score])
@@ -152,8 +152,28 @@ class FirebaseAPI{
         }
     }
     
-    func deleteGameData(coordinates: CLLocationCoordinate2D, completion: @escaping () -> Void?){
-        
+    func deleteGameData(date: String, coordinates: CLLocationCoordinate2D){
+        let ref = Database.database(url: FirebaseAPI().databaseUrl).reference()
+        ref.child("locations").observeSingleEvent(of: .value) { locationSnapshot in
+            for child in locationSnapshot.children {
+                let childSnapshot = child as! DataSnapshot
+                let key = childSnapshot.key
+                let locationData = childSnapshot.value as! [String: Any]
+                let latitude = locationData["latitude"] as! Double
+                let longitude = locationData["longitude"] as! Double
+                let gameDate = locationSnapshot.childSnapshot(forPath: "\(key)/game/date").value as! String
+
+                if latitude == coordinates.latitude && longitude == coordinates.longitude {
+                    if gameDate == date{
+                        let gamesRef = ref.child("locations").child(key)
+                        gamesRef.removeValue()
+
+                    }
+                    
+                }
+            }
+            
+        }
     }
     
 }

@@ -13,6 +13,7 @@ import GoogleSignIn
 
 class SignUpViewController: UIViewController{
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var googleSignInButton: GIDSignInButton!
     @IBOutlet weak var confirmPasswordTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -30,6 +31,7 @@ class SignUpViewController: UIViewController{
         // checks if sign up Fields are valid and filled.
         if validateSignUpFields(emailTextField.text, usernameTextField.text, passwordTextField.text, confirmPasswordTextField.text){
             //if valid and correctly filled, creates new user in firebase.
+            activityIndicator.startAnimating()
             Authentication().signUp(email: emailTextField.text!, username: usernameTextField.text!, password: passwordTextField.text!) { result, error in
                 if let error = error{
                     self.showFailure(message: error.localizedDescription, title: "Error")
@@ -38,6 +40,7 @@ class SignUpViewController: UIViewController{
                 
                 if result {
                     self.performSegue(withIdentifier: "SignUpSegue", sender: nil)
+                    self.activityIndicator.stopAnimating()
                 }
             }
         }
@@ -45,7 +48,7 @@ class SignUpViewController: UIViewController{
     
     
     @objc func googleSignUp() {
-        
+        activityIndicator.startAnimating()
         Authentication().googleAuthLogin(viewController: self) { result, error in
             if let error = error{
                 self.showFailure(message: error.localizedDescription, title: "Error")
@@ -54,6 +57,7 @@ class SignUpViewController: UIViewController{
             
             if result {
                 self.performSegue(withIdentifier: "SignUpSegue", sender: nil)
+                self.activityIndicator.stopAnimating()
             }
         }
         
