@@ -20,20 +20,28 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
         super.viewDidLoad()
         fetchSavedData()
         checkSavedData {
-            self.fetchSavedData()
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+            
         }
         
     }
     
     func checkSavedData(completion: @escaping () -> Void?){
-        FirebaseAPI().getGameData(coordinates: CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)) { dates in
+        
+        if gameFetchedResultController.fetchedObjects?.count != 0{
+            DispatchQueue.main.async {
+                completion()
+            }
+            
+        } else { FirebaseAPI().getGameData(coordinates: CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)) { dates, nbrPlayer in
             self.fetchSavedData()
             if let objects = self.gameFetchedResultController.sections?[0].objects as? [Game] {
                 if objects.count < dates.count{
                     print("different count: obj \(objects.count)  date \(dates.count)")
-                    for date in dates {
-                        self.addGame(date: date)
+                    for (index, date) in dates.enumerated() {
+                        self.addGame(date: date, nbrPlayer: nbrPlayer[index])
                     }
                     
                 } else {
@@ -43,6 +51,7 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
                     }
                 }
             }
+        }
         }
     }
     
@@ -54,9 +63,10 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
         
     }
     
-    func addGame(date: String){
+    func addGame(date: String, nbrPlayer: Int16){
         let game = Game(context: self.dataController.viewContext)
         game.date = date
+        game.nbrPlayer = nbrPlayer
         game.location = self.pin
         try? dataController.viewContext.save()
     }
@@ -91,11 +101,24 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameHistoryCell")!
         
-        
-        if let creationDate = gameFetchedResultController.object(at: indexPath).date {
+        let object = gameFetchedResultController.object(at: indexPath)
+        if let creationDate = object.date{
             cell.textLabel?.text = creationDate
+            cell.detailTextLabel?.text = "Number of players: \(object.nbrPlayer)"
+        } else {
+            FirebaseAPI().getGameData(coordinates: CLLocationCoordinate2D(latitude: self.pin.latitude, longitude: self.pin.longitude)) { dates, nbrPlayer in
+                DispatchQueue.main.async {
+                    cell.textLabel?.text = dates[indexPath.row]
+                    cell.detailTextLabel?.text = "Number of players: \(nbrPlayer)"
+                }
+                DispatchQueue.main.async {
+                    object.date = dates[indexPath.row]
+                    try? self.dataController.viewContext.save()
+                }
+            }
+            
         }
-        cell.detailTextLabel?.text = "Number of players: \(gameFetchedResultController.object(at: indexPath).players!.count)"
+        
         return cell
     }
     

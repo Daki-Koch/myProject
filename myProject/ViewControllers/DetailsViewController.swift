@@ -27,7 +27,12 @@ class DetailsViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        sortPlayers()
+        fetchStoredPlayerInfos {
+            DispatchQueue.main.async {
+                self.sortPlayers()
+            }
+        }
+        
     }
     
     func sortPlayers(){
@@ -48,20 +53,30 @@ class DetailsViewController: UIViewController{
         }
     }
     
-    func getPlayerInfos(){
-        
-        if let latitude = gameFetchedResultController.object(at: self.indexPath).location?.latitude, let longitude = gameFetchedResultController.object(at: self.indexPath).location?.longitude{
+    func fetchStoredPlayerInfos(completion: @escaping () -> Void?){
+        if let playerInfos = gameFetchedResultController.object(at: indexPath).players?.allObjects as? [Player]{
+            if playerInfos.isEmpty {
+                getPlayerInfos {
+                }
+            }
             
-            FirebaseAPI().getPlayersData(coordinates: CLLocationCoordinate2D(latitude: latitude, longitude: longitude)) { playerNames, playerScores in
+            else {
+                self.sortPlayers()
+            }
+        }
+    }
+    
+    func getPlayerInfos(completion: @escaping () -> Void?){
+        
+        if let latitude = gameFetchedResultController.object(at: self.indexPath).location?.latitude, let longitude = gameFetchedResultController.object(at: self.indexPath).location?.longitude, let date = gameFetchedResultController.object(at: indexPath).date{
+            FirebaseAPI().getPlayersData(date: date, coordinates: CLLocationCoordinate2D(latitude: latitude, longitude: longitude)) { playerNames, playerScores in
                 for (index, player) in playerNames.enumerated() {
                     let savedPlayer = Player(context: self.dataController.viewContext)
                     savedPlayer.name = player
                     savedPlayer.score = playerScores[index]
-                    self.players[index].name = player
-                    self.players[index].score = playerScores[index]
+                    self.players.append(savedPlayer)
                     savedPlayer.game = self.gameFetchedResultController.object(at: self.indexPath)
                 }
-                print(playerNames)
                 try? self.dataController.viewContext.save()
             }
         }
