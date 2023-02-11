@@ -21,7 +21,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         dataController.load()
         
-        let navigationController = window?.rootViewController as! UINavigationController
         
         let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let auth = Auth.auth()
@@ -29,18 +28,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
             
-            /*guard error == nil else {
-                print(error)
-                return
-            }*/
             if user != nil || auth.currentUser != nil{
                 let homePage = mainStoryboard.instantiateViewController(withIdentifier: "GameModeVC") as! GameModeViewController
                 homePage.dataController = self.dataController
+                
                 self.window?.rootViewController?.show(homePage, sender: nil)
             } else {
-                let authenticationViewController = navigationController.topViewController as! AuthenticationViewController
+                let authenticationViewController = mainStoryboard.instantiateViewController(withIdentifier: "AuthenticationVC") as! AuthenticationViewController
                 authenticationViewController.dataController = self.dataController
                 
+                let navigationController = UINavigationController(rootViewController: authenticationViewController)
+                navigationController.navigationBar.prefersLargeTitles = true
+                self.window?.rootViewController = navigationController
             }
             
         }

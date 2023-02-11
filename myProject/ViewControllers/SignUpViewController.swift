@@ -20,6 +20,9 @@ class SignUpViewController: UIViewController{
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     
+    
+    var dataController: DataController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         googleSignInButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(googleSignUp)))
@@ -61,6 +64,13 @@ class SignUpViewController: UIViewController{
             }
         }
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? GameModeViewController{
+            vc.dataController = dataController
+        }
+
     }
     
     

@@ -27,7 +27,9 @@ class MapViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         setMapView()
+        print("A")
         checkForNewPins()
+        
         
         
         

@@ -138,7 +138,6 @@ class FirebaseAPI{
                             
                             group.notify(queue: .main) {
                                 DispatchQueue.main.async {
-                                    print(playerNames)
                                     completion(playerNames, playerScores)
                                 }
                             }

@@ -18,7 +18,7 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchSavedData()
+        
         checkSavedData {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -28,24 +28,31 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
         
     }
     
-    func checkSavedData(completion: @escaping () -> Void?){
-        
+    func checkSavedData(completion: @escaping() -> Void?){
+        let group = DispatchGroup()
+        self.fetchSavedDataAndReloadView()
         if gameFetchedResultController.fetchedObjects?.count != 0{
             DispatchQueue.main.async {
-                completion()
+                self.tableView.reloadData()
             }
-            
-        } else { FirebaseAPI().getGameData(coordinates: CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)) { dates, nbrPlayer in
-            self.fetchSavedData()
+        }
+        FirebaseAPI().getGameData(coordinates: CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)) { dates, nbrPlayer in
+            group.enter()
+            self.fetchSavedDataAndReloadView()
             if let objects = self.gameFetchedResultController.sections?[0].objects as? [Game] {
                 if objects.count < dates.count{
                     for (index, date) in dates.enumerated() {
                         self.addGame(date: date, nbrPlayer: nbrPlayer[index])
                     }
-                    
                 }
+                group.leave()
             }
         }
+        
+        group.notify(queue: .main) {
+            DispatchQueue.main.async {
+                completion()
+            }
         }
     }
     
@@ -73,6 +80,29 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
         
         try? gameFetchedResultController.performFetch()
         
+        
+    }
+    
+    func fetchSavedDataAndReloadView(){
+        
+        let fetchRequest: NSFetchRequest<Game> = Game.fetchRequest()
+        
+        let predicate = NSPredicate(format: "location == %@", pin)
+        fetchRequest.predicate = predicate
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        
+        gameFetchedResultController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: "\(pin)-Game")
+        gameFetchedResultController.delegate = self
+        
+        try? gameFetchedResultController.performFetch()
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+        
+        
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -87,6 +117,7 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameHistoryCell")!
+        
         
         let object = gameFetchedResultController.object(at: indexPath)
         if let creationDate = object.date{

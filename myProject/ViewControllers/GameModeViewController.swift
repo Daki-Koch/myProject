@@ -21,6 +21,10 @@ class GameModeViewController: UIViewController {
     @IBOutlet weak var fivePlayerButton: UIButton!
     @IBOutlet weak var historyButton: UIButton!
     
+    override func viewDidLoad() {
+        print(dataController)
+    }
+    
 
     
     @IBAction func signOut(_ sender: Any) {

@@ -62,6 +62,8 @@ class AuthenticationViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? GameModeViewController{
             vc.dataController = dataController
+        } else if let vc = segue.destination as? SignUpViewController{
+            vc.dataController = dataController
         }
 
     }

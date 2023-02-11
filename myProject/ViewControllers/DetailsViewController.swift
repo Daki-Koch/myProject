@@ -18,7 +18,7 @@ class DetailsViewController: UIViewController{
     @IBOutlet weak var fourthPlayerLabel: UILabel!
     @IBOutlet weak var fifthPlayerLabel: UILabel!
     @IBOutlet weak var deleteBarButton: UIBarButtonItem!
-    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var gameFetchedResultController: NSFetchedResultsController<Game>!
     var dataController: DataController!
@@ -54,19 +54,22 @@ class DetailsViewController: UIViewController{
     }
     
     func fetchStoredPlayerInfos(completion: @escaping () -> Void?){
+        activityIndicator.startAnimating()
         if let playerInfos = gameFetchedResultController.object(at: indexPath).players?.allObjects as? [Player]{
             if playerInfos.isEmpty {
-                getPlayerInfos {
-                }
+                getPlayerInfos()
             }
             
             else {
-                self.sortPlayers()
+                DispatchQueue.main.async {
+                    self.sortPlayers()
+                    completion()
+                }
             }
         }
     }
     
-    func getPlayerInfos(completion: @escaping () -> Void?){
+    func getPlayerInfos(){
         
         if let latitude = gameFetchedResultController.object(at: self.indexPath).location?.latitude, let longitude = gameFetchedResultController.object(at: self.indexPath).location?.longitude, let date = gameFetchedResultController.object(at: indexPath).date{
             FirebaseAPI().getPlayersData(date: date, coordinates: CLLocationCoordinate2D(latitude: latitude, longitude: longitude)) { playerNames, playerScores in
@@ -78,6 +81,11 @@ class DetailsViewController: UIViewController{
                     savedPlayer.game = self.gameFetchedResultController.object(at: self.indexPath)
                 }
                 try? self.dataController.viewContext.save()
+                
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                    self.sortPlayers()
+                }
             }
         }
     }
