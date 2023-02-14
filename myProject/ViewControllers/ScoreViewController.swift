@@ -45,7 +45,7 @@ class ScoreViewController: UIViewController{
     var selectedBet: String!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        AppOrientationUtility.lockOrientation(UIInterfaceOrientationMask.portrait, andRotateTo: UIInterfaceOrientation.portrait)
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()

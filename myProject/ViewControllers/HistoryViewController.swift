@@ -12,6 +12,7 @@ import CoreLocation
 
 class HistoryViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     var gameFetchedResultController: NSFetchedResultsController<Game>!
     var dataController: DataController!
     var pin: Pin!
@@ -29,15 +30,18 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
     }
     
     func checkSavedData(completion: @escaping() -> Void?){
+        activityIndicator.startAnimating()
         let group = DispatchGroup()
         self.fetchSavedDataAndReloadView()
         if gameFetchedResultController.fetchedObjects?.count != 0{
+            activityIndicator.stopAnimating()
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
         FirebaseAPI().getGameData(coordinates: CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)) { dates, nbrPlayer, error in
             if let error = error {
+                self.activityIndicator.stopAnimating()
                 self.showFailure(message: error.localizedDescription, title: "Error")
                 return
             }
@@ -55,6 +59,7 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
         
         group.notify(queue: .main) {
             DispatchQueue.main.async {
+                self.activityIndicator.stopAnimating()
                 completion()
             }
         }

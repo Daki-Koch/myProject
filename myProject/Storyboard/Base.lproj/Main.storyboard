@@ -597,9 +597,13 @@
                         <color key="backgroundColor" red="0.21627657750000001" green="0.49417883159999998" blue="0.27719455669999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <color key="sectionIndexColor" systemColor="labelColor"/>
                         <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <activityIndicatorView key="tableHeaderView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" id="r3j-TS-LCF">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </activityIndicatorView>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="GameHistoryCell" textLabel="BZJ-DC-GLD" detailTextLabel="PRZ-4Q-8CA" style="IBUITableViewCellStyleValue1" id="tqK-TU-Klo">
-                                <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                                <rect key="frame" x="0.0" y="94" width="393" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tqK-TU-Klo" id="hgf-jO-hst">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
@@ -630,6 +634,7 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="History" id="2dc-aq-R7y"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="r3j-TS-LCF" id="Xb0-G5-MwX"/>
                         <segue destination="wIQ-9C-41Z" kind="show" identifier="gameDetailsSegue" id="nqA-4F-Wjv"/>
                     </connections>
                 </tableViewController>

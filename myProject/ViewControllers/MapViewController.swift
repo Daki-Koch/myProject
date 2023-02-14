@@ -113,6 +113,11 @@ class MapViewController: UIViewController {
         locationManager.startUpdatingLocation()
         locationManager.delegate = self
         
+        if let location = locationManager.location {
+                let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+                mapView.setRegion(region, animated: true)
+            }
         mapView.showsUserLocation = true
     }
     
