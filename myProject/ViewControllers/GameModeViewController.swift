@@ -15,13 +15,10 @@ class GameModeViewController: UIViewController {
     
     var dataController: DataController!
     @IBOutlet weak var signOutButton: UIBarButtonItem!
-    
     @IBOutlet weak var threePlayerButton: UIButton!
     @IBOutlet weak var fourPlayerButton: UIButton!
     @IBOutlet weak var fivePlayerButton: UIButton!
     @IBOutlet weak var historyButton: UIButton!
-    
-
     
     @IBAction func signOut(_ sender: Any) {
         GIDSignIn.sharedInstance.signOut()
@@ -36,6 +33,7 @@ class GameModeViewController: UIViewController {
             
         } catch {
             showFailure(message: error.localizedDescription, title: "Error")
+            return
         }
     }
     

@@ -64,6 +64,7 @@ class DetailsViewController: UIViewController{
                 DispatchQueue.main.async {
                     self.sortPlayers()
                     completion()
+                    self.activityIndicator.stopAnimating()
                 }
             }
         }
@@ -72,7 +73,11 @@ class DetailsViewController: UIViewController{
     func getPlayerInfos(){
         
         if let latitude = gameFetchedResultController.object(at: self.indexPath).location?.latitude, let longitude = gameFetchedResultController.object(at: self.indexPath).location?.longitude, let date = gameFetchedResultController.object(at: indexPath).date{
-            FirebaseAPI().getPlayersData(date: date, coordinates: CLLocationCoordinate2D(latitude: latitude, longitude: longitude)) { playerNames, playerScores in
+            FirebaseAPI().getPlayersData(date: date, coordinates: CLLocationCoordinate2D(latitude: latitude, longitude: longitude)) { playerNames, playerScores, error in
+                if let error = error {
+                    self.showFailure(message: error.localizedDescription, title: "Error")
+                    return
+                }
                 for (index, player) in playerNames.enumerated() {
                     let savedPlayer = Player(context: self.dataController.viewContext)
                     savedPlayer.name = player
@@ -109,7 +114,12 @@ class DetailsViewController: UIViewController{
     func deleteGame(){
         
         if let latitude = gameFetchedResultController.object(at: self.indexPath).location?.latitude, let longitude = gameFetchedResultController.object(at: self.indexPath).location?.longitude, let date = gameFetchedResultController.object(at: indexPath).date{
-            FirebaseAPI().deleteGameData(date: date, coordinates: CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
+            FirebaseAPI().deleteGameData(date: date, coordinates: CLLocationCoordinate2D(latitude: latitude, longitude: longitude)) { error in
+                if let error = error {
+                    self.showFailure(message: error.localizedDescription, title: "Error")
+                    return
+                }
+            }
         }
         let gameToDelete = gameFetchedResultController.object(at: indexPath)
         dataController.viewContext.delete(gameToDelete)

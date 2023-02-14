@@ -45,6 +45,7 @@ class ScoreViewController: UIViewController{
     var selectedBet: String!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
@@ -129,8 +130,8 @@ class ScoreViewController: UIViewController{
                 }
             }
         }
-        self.tableView.reloadData()
-        self.undoButton.isEnabled = false
+        tableView.reloadData()
+        undoButton.isEnabled = false
     }
     
     @IBAction func saveGameTapped(_ sender: Any) {

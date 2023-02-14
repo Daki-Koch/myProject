@@ -222,58 +222,10 @@
             filePath = "myProject/GoogleAuthAPI/FirebaseAPI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "getPinsData(completion:)"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D447D718-5F44-4FAF-AB11-00AE8D43FE28"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "myProject/GoogleAuthAPI/FirebaseAPI.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "getPinsData(completion:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "D447D718-5F44-4FAF-AB11-00AE8D43FE28 - 610de861d8c0e07a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "myProject.FirebaseAPI.getPinsData(completion: (Swift.Array&lt;__C.CLLocationCoordinate2D&gt;) -&gt; Swift.Optional&lt;()&gt;) -&gt; ()"
-                  moduleName = "myProject"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/david/Documents/Udacity_iOS_Dev/myProject/myProject/GoogleAuthAPI/FirebaseAPI.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "54"
-                  endingLineNumber = "54"
-                  offsetFromSymbolStart = "540">
-               </Location>
-               <Location
-                  uuid = "D447D718-5F44-4FAF-AB11-00AE8D43FE28 - 2196cd5138db3daf"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.FIRDataSnapshot) -&gt; () in myProject.FirebaseAPI.getPinsData(completion: (Swift.Array&lt;__C.CLLocationCoordinate2D&gt;) -&gt; Swift.Optional&lt;()&gt;) -&gt; ()"
-                  moduleName = "myProject"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/david/Documents/Udacity_iOS_Dev/myProject/myProject/GoogleAuthAPI/FirebaseAPI.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "52"
-                  endingLineNumber = "52"
-                  offsetFromSymbolStart = "188">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -286,8 +238,8 @@
             filePath = "myProject/ViewControllers/MapViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
             landmarkName = "addPinLocation(coordinates:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -302,8 +254,8 @@
             filePath = "myProject/GoogleAuthAPI/FirebaseAPI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
             landmarkName = "getPlayersData(date:coordinates:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -334,9 +286,25 @@
             filePath = "myProject/ViewControllers/MapViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "31"
-            endingLineNumber = "31"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
             landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BB2BAFCC-A8D4-4E4F-B96F-6AF2E244F39E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "myProject/ViewControllers/AuthenticationViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "signInTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

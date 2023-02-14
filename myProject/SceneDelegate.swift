@@ -39,6 +39,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 
                 let navigationController = UINavigationController(rootViewController: authenticationViewController)
                 navigationController.navigationBar.prefersLargeTitles = true
+                navigationController.navigationBar.tintColor = .white
                 self.window?.rootViewController = navigationController
             }
             

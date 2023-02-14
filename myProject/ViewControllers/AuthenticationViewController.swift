@@ -30,6 +30,7 @@ class AuthenticationViewController: UIViewController {
             Authentication().authLogin(email: emailTextField.text!, password: passwordTextField.text!) { result, error in
                 if let error = error{
                     self.showFailure(message: error.localizedDescription, title: "Error")
+                    self.activityIndicator.stopAnimating()
                     return
                 }
                 
@@ -49,6 +50,7 @@ class AuthenticationViewController: UIViewController {
         Authentication().googleAuthLogin(viewController: self) { result, error in
             if let error = error{
                 self.showFailure(message: error.localizedDescription, title: "Error")
+                self.activityIndicator.stopAnimating()
                 return
             }
             if result{

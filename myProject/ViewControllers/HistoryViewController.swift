@@ -36,7 +36,11 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
                 self.tableView.reloadData()
             }
         }
-        FirebaseAPI().getGameData(coordinates: CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)) { dates, nbrPlayer in
+        FirebaseAPI().getGameData(coordinates: CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude)) { dates, nbrPlayer, error in
+            if let error = error {
+                self.showFailure(message: error.localizedDescription, title: "Error")
+                return
+            }
             group.enter()
             self.fetchSavedDataAndReloadView()
             if let objects = self.gameFetchedResultController.sections?[0].objects as? [Game] {
@@ -124,7 +128,7 @@ class HistoryViewController: UITableViewController, NSFetchedResultsControllerDe
             cell.textLabel?.text = creationDate
             cell.detailTextLabel?.text = "Number of players: \(object.nbrPlayer)"
         } else {
-            FirebaseAPI().getGameData(coordinates: CLLocationCoordinate2D(latitude: self.pin.latitude, longitude: self.pin.longitude)) { dates, nbrPlayer in
+            FirebaseAPI().getGameData(coordinates: CLLocationCoordinate2D(latitude: self.pin.latitude, longitude: self.pin.longitude)) { dates, nbrPlayer, error in
                 DispatchQueue.main.async {
                     cell.textLabel?.text = dates[indexPath.row]
                     cell.detailTextLabel?.text = "Number of players: \(nbrPlayer)"

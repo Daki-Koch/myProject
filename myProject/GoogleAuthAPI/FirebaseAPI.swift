@@ -41,7 +41,7 @@ class FirebaseAPI{
         
     }
     
-    func getPinsData(completion: @escaping ([CLLocationCoordinate2D]) -> Void?){
+    func getPinsData(completion: @escaping ([CLLocationCoordinate2D], Error?) -> Void?){
         var pinLocations: [CLLocationCoordinate2D] = []
         let ref = Database.database(url: FirebaseAPI().databaseUrl).reference()
         ref.child("locations").observeSingleEvent(of: .value) { snapshot in
@@ -57,12 +57,16 @@ class FirebaseAPI{
                 pinLocations.append(CLLocationCoordinate2D(latitude: latitude, longitude: longitude))
             }
             DispatchQueue.main.async {
-                completion(pinLocations)
+                completion(pinLocations, nil)
+            }
+        } withCancel: { error in
+            DispatchQueue.main.async {
+                completion([], error)
             }
         }
         
     }
-    func getGameData(coordinates: CLLocationCoordinate2D, completion: @escaping ([String], [Int16]) -> Void?){
+    func getGameData(coordinates: CLLocationCoordinate2D, completion: @escaping ([String], [Int16], Error?) -> Void?){
         let ref = Database.database(url: FirebaseAPI().databaseUrl).reference()
         ref.child("locations").observeSingleEvent(of: .value) { locationSnapshot in
             var gameDate: [String] = []
@@ -74,6 +78,7 @@ class FirebaseAPI{
                 let locationData = childSnapshot.value as! [String: Any]
                 let latitude = locationData["latitude"] as! Double
                 let longitude = locationData["longitude"] as! Double
+                print(child)
                 
                 if latitude == coordinates.latitude && longitude == coordinates.longitude {
                     let gamesRef = ref.child("locations").child(key).child("game")
@@ -82,6 +87,7 @@ class FirebaseAPI{
                         
                         gameDate.append(gamesSnapshot.childSnapshot(forPath: "date").value as! String)
                         playerNbr.append(gamesSnapshot.childSnapshot(forPath: "nbrPlayer").value as! Int16)
+                        print(gameDate)
                         group.leave()
                     })
                     
@@ -89,13 +95,17 @@ class FirebaseAPI{
             }
             group.notify(queue: .main) {
                 DispatchQueue.main.async {
-                    completion(gameDate, playerNbr)
+                    completion(gameDate, playerNbr, nil)
                 }
+            }
+        } withCancel: { error in
+            DispatchQueue.main.async {
+                completion([], [], error)
             }
         }
     }
     
-    func getPlayersData(date: String, coordinates: CLLocationCoordinate2D, completion: @escaping ([String], [Int16]) -> Void?){
+    func getPlayersData(date: String, coordinates: CLLocationCoordinate2D, completion: @escaping ([String], [Int16], Error?) -> Void?){
         let ref = Database.database(url: FirebaseAPI().databaseUrl).reference()
         ref.child("locations").observeSingleEvent(of: .value) { locationSnapshot in
             var playerNames: [String] = []
@@ -113,7 +123,7 @@ class FirebaseAPI{
                 if latitude == coordinates.latitude && longitude == coordinates.longitude {
                     if gameDate == date{
                         let gamesRef = ref.child("locations").child(key).child("game")
-                        gamesRef.observeSingleEvent(of: .value, with: { (gamesSnapshot) in
+                        gamesRef.observeSingleEvent(of: .value) { (gamesSnapshot) in
                             
                             for (index, _) in gamesSnapshot.children.enumerated() {
                                 
@@ -138,20 +148,28 @@ class FirebaseAPI{
                             
                             group.notify(queue: .main) {
                                 DispatchQueue.main.async {
-                                    completion(playerNames, playerScores)
+                                    completion(playerNames, playerScores, nil)
                                 }
                             }
                             
-                        })
+                        }withCancel: { error in
+                            DispatchQueue.main.async {
+                                completion([], [], error)
+                            }
+                        }
                     }
                     
                 }
             }
             
+        } withCancel: { error in
+            DispatchQueue.main.async {
+                completion([], [], error)
+            }
         }
     }
     
-    func deleteGameData(date: String, coordinates: CLLocationCoordinate2D){
+    func deleteGameData(date: String, coordinates: CLLocationCoordinate2D, completion: @escaping (Error?) -> Void?){
         let ref = Database.database(url: FirebaseAPI().databaseUrl).reference()
         ref.child("locations").observeSingleEvent(of: .value) { locationSnapshot in
             for child in locationSnapshot.children {
@@ -166,12 +184,17 @@ class FirebaseAPI{
                     if gameDate == date{
                         let gamesRef = ref.child("locations").child(key)
                         gamesRef.removeValue()
+                        completion(nil)
 
                     }
                     
                 }
             }
             
+        } withCancel: { error in
+            DispatchQueue.main.async {
+                completion(error)
+            }
         }
     }
     

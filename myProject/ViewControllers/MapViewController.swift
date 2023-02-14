@@ -27,7 +27,6 @@ class MapViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         setMapView()
-        print("A")
         checkForNewPins()
         
         
@@ -53,7 +52,11 @@ class MapViewController: UIViewController {
     
     func checkForNewPins() {
         
-        FirebaseAPI().getPinsData { downloadedPinLocations in
+        FirebaseAPI().getPinsData { downloadedPinLocations, error in
+            if let error = error {
+                self.showFailure(message: error.localizedDescription, title: "Error")
+                return
+            }
             for location in downloadedPinLocations {
                 self.addPinLocation(coordinates: location)
             }
