@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/david/Documents/Udacity_iOS_Dev/myProject/myProject/ViewControllers/DetailsViewController.swift">
-   </FileRef>
-   <FileRef
       location = "group:myProject.xcodeproj">
    </FileRef>
    <FileRef

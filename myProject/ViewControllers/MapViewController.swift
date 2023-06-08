@@ -28,7 +28,7 @@ class MapViewController: UIViewController {
         locationManager.startUpdatingLocation()
         setMapView()
         checkForNewPins()
-        
+        print(locationManager.location?.coordinate.latitude)
         
         
         
@@ -62,11 +62,11 @@ class MapViewController: UIViewController {
             }
             self.loadMapPins()
         }
-        
     }
     
     func addPinLocation(coordinates: CLLocationCoordinate2D) {
         let existingPins = fetchPins()
+
         if existingPins.count > 0 {
             for existingPin in existingPins {
                 if existingPin.latitude == coordinates.latitude && existingPin.longitude == coordinates.longitude{

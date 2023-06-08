@@ -45,6 +45,7 @@ class ScoreViewController: UIViewController{
     var selectedBet: String!
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround() 
         AppOrientationUtility.lockOrientation(UIInterfaceOrientationMask.portrait, andRotateTo: UIInterfaceOrientation.portrait)
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -55,6 +56,7 @@ class ScoreViewController: UIViewController{
             calledPlayerLabel.isHidden = true
             
         }
+
         undoButton.isEnabled = false
         
     }

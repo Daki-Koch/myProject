@@ -76,8 +76,8 @@ extension ScoreViewController: UIPickerViewDataSource, UIPickerViewDelegate, UIT
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
-            currentLatitude = round(location.coordinate.latitude*1000)
-            currentLongitude = round(location.coordinate.longitude*1000)
+            currentLatitude = round(location.coordinate.latitude*1000)/1000
+            currentLongitude = round(location.coordinate.longitude*1000)/1000
             locationManager.stopUpdatingLocation()
         }
     }
@@ -111,7 +111,6 @@ extension ScoreViewController: UIPickerViewDataSource, UIPickerViewDelegate, UIT
         if existingPins.count > 0 {
             for existingPin in existingPins {
                 if existingPin.latitude == coordinates.latitude && existingPin.longitude == coordinates.longitude{
-                    
                     return
                 } else {
                     addNewPin(coordinates: coordinates)

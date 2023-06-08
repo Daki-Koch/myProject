@@ -14,7 +14,6 @@
 		6329BED62992698200549BE4 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329BED52992698200549BE4 /* DataController.swift */; };
 		6329BED829927AFC00549BE4 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329BED729927AFC00549BE4 /* MapViewController.swift */; };
 		6329BEDC2992A36200549BE4 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329BEDB2992A36200549BE4 /* HistoryViewController.swift */; };
-		6329BEDE2992A37600549BE4 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329BEDD2992A37600549BE4 /* DetailsViewController.swift */; };
 		6329BEE02992A48000549BE4 /* MapView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6329BEDF2992A48000549BE4 /* MapView + Extensions.swift */; };
 		632DE6132993B8CC00058751 /* FirebaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632DE6122993B8CC00058751 /* FirebaseAPI.swift */; };
 		6333F24529776C030010FC92 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6333F24429776C030010FC92 /* Authentication.swift */; };
@@ -36,6 +35,7 @@
 		63CA5D6E297AF4AF00033905 /* TarotScoreComputing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CA5D6D297AF4AF00033905 /* TarotScoreComputing.swift */; };
 		63CB4FA1299C010E004DB054 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CB4FA0299C010E004DB054 /* UIViewController+Extension.swift */; };
 		63F58CF9299C1773008B8780 /* AppOrientationUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63F58CF8299C1773008B8780 /* AppOrientationUtility.swift */; };
+		E33FED2D2A31DB1A00AD3CBE /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E33FED2C2A31DB1A00AD3CBE /* DetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,7 +67,6 @@
 		6329BED52992698200549BE4 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		6329BED729927AFC00549BE4 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		6329BEDB2992A36200549BE4 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
-		6329BEDD2992A37600549BE4 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailsViewController.swift; path = /Users/david/Documents/Udacity_iOS_Dev/myProject/myProject/ViewControllers/DetailsViewController.swift; sourceTree = "<absolute>"; };
 		6329BEDF2992A48000549BE4 /* MapView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MapView + Extensions.swift"; sourceTree = "<group>"; };
 		632DE6122993B8CC00058751 /* FirebaseAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAPI.swift; sourceTree = "<group>"; };
 		6333F24429776C030010FC92 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
@@ -94,6 +93,7 @@
 		63CB4FA0299C010E004DB054 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		63F58CF8299C1773008B8780 /* AppOrientationUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppOrientationUtility.swift; sourceTree = "<group>"; };
 		90D822783E3C22A3080B7C0D /* Pods-myProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-myProject.debug.xcconfig"; path = "Target Support Files/Pods-myProject/Pods-myProject.debug.xcconfig"; sourceTree = "<group>"; };
+		E33FED2C2A31DB1A00AD3CBE /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,8 +210,8 @@
 			isa = PBXGroup;
 			children = (
 				6329BED729927AFC00549BE4 /* MapViewController.swift */,
-				6329BEDD2992A37600549BE4 /* DetailsViewController.swift */,
 				6329BEDB2992A36200549BE4 /* HistoryViewController.swift */,
+				E33FED2C2A31DB1A00AD3CBE /* DetailsViewController.swift */,
 				633848B729773B1900E3B665 /* GameModeViewController.swift */,
 				63AC6085296C529C007AD889 /* AuthenticationViewController.swift */,
 				63AC60EA296C6932007AD889 /* SignUpViewController.swift */,
@@ -467,9 +467,9 @@
 				63CB4FA1299C010E004DB054 /* UIViewController+Extension.swift in Sources */,
 				63AC6082296C529C007AD889 /* AppDelegate.swift in Sources */,
 				6333F24529776C030010FC92 /* Authentication.swift in Sources */,
+				E33FED2D2A31DB1A00AD3CBE /* DetailsViewController.swift in Sources */,
 				6329BEE02992A48000549BE4 /* MapView + Extensions.swift in Sources */,
 				630C7645297EB2F400AD69BD /* ScoreViewController+Extensions.swift in Sources */,
-				6329BEDE2992A37600549BE4 /* DetailsViewController.swift in Sources */,
 				63F58CF9299C1773008B8780 /* AppOrientationUtility.swift in Sources */,
 				63AC60B8296C5C4D007AD889 /* AuthenticationHelpers.swift in Sources */,
 				633848B829773B1900E3B665 /* GameModeViewController.swift in Sources */,
